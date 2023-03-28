@@ -1,11 +1,12 @@
 import React, { useRef,useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import axios from "axios";
 import baseURL from "../../../url";
 
 const Login = () => {
   const [showErrorBox, setShowErrorBox] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
   const email = useRef(null);
   const password = useRef(null);
 
@@ -38,7 +39,7 @@ const Login = () => {
 
       if(response.data.status === 'success'){
         localStorage.setItem('token', response.data.token);
-        window.location.href="https://64225ca18806c800094ba7b4--soft-marzipan-5467f2.netlify.app/dashboard";
+        navigate("/dashboard");
       }
 
     } catch (error) {
