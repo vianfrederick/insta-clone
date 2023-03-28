@@ -1,2 +1,2 @@
-const baseURL = "http://localhost:5000";
+const baseURL = "https://insta-clone-xltd.onrender.com/";
 export default baseURL;
