@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
-
+const port = 5000;
 const authenticateRouter = require('./routes/authenticate');
 const postsRouter = require('./routes/posts');
 const usersRouter = require('./routes/users');
@@ -27,6 +27,6 @@ app.use('/',postsRouter);
 app.use('/', usersRouter);
 
 
-app.listen("5000", () => {
-  console.log("Server started at Port 5000");
+app.listen(port, () => {
+  console.log(`Server started at Port ${port}`);
 });

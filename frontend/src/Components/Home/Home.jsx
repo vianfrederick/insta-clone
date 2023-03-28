@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 import IntroImage from "../../Images/iphone6.png";
 import Bizinsider from "../../Images/bizinsider.png";

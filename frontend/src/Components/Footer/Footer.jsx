@@ -10,16 +10,13 @@ import {
   import {TiSocialLinkedin} from "react-icons/ti";
 
 const Footer = () => {
-  const [loggedInUser, setLoggedInUser] = useState(null);
   const [isLoggedIn, setIsloggedIn] = useState(false);
 
   function removeUser(){
     setIsloggedIn(false);
-    setLoggedInUser(null);
   }
 
-  function addUser(loggedUser){
-    setLoggedInUser(loggedUser);
+  function addUser(){
     setIsloggedIn(true);
   }
 
@@ -27,8 +24,8 @@ const Footer = () => {
     const token = localStorage.getItem("token");
     if (token) {
       try {
-        const loggedUser = jwt_decode(token);
-        addUser(loggedUser);
+        jwt_decode(token);
+        addUser();
       } catch (error) {
         removeUser();
       }

@@ -46,28 +46,6 @@ const IndividualPost = () => {
       theme: "light",
     });
 
-  async function populatePost() {
-    try {
-      onOpenModalDeletePost();
-      const res = await axios.get(`${baseURL}/posts/${id}`, {
-        headers: {
-          token: localStorage.getItem("token"),
-        },
-      });
-      respondeDelPostModal();
-      if (res.data.status === "error") {
-        notify("Something went wrong. Please try again");
-        return;
-      }
-      if (res.data.status === "success") {
-        setPost(res.data.post);
-        setLoggedInUser(res.data.loggedInUser);
-      }
-    } catch (error) {
-      notify("Something went wrong. Please try again");
-    }
-  }
-
   async function likePost(postId) {
     try {
       const res = await axios.post(
@@ -169,6 +147,28 @@ const IndividualPost = () => {
   }
 
   useEffect(() => {
+    async function populatePost() {
+      try {
+        onOpenModalDeletePost();
+        const res = await axios.get(`${baseURL}/posts/${id}`, {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        });
+        respondeDelPostModal();
+        if (res.data.status === "error") {
+          notify("Something went wrong. Please try again");
+          return;
+        }
+        if (res.data.status === "success") {
+          setPost(res.data.post);
+          setLoggedInUser(res.data.loggedInUser);
+        }
+      } catch (error) {
+        notify("Something went wrong. Please try again");
+      }
+    }
+  
     const token = localStorage.getItem("token");
     if (token) {
       try {
@@ -183,7 +183,7 @@ const IndividualPost = () => {
       notify("Please login to continue");
       navigate("/login");
     }
-  }, [navigate]);
+  }, [navigate, id]);
 
   return (
     <section className="pt-16 pb-[2em]">

@@ -44,23 +44,6 @@ const Home_logged_in = () => {
     }));
   };
 
-  async function populateDashboard() {
-    try {
-      onOpenModalDeletePost();
-      const res = await axios.get(`${baseURL}/dashboard`, {
-        headers: {
-          token: localStorage.getItem("token"),
-        },
-      });
-      respondeDelPostModal();
-      setAllPosts(res.data.posts);
-      setAllUsers(res.data.users);
-      setLoggedInUser(res.data.loggedInUser);
-    } catch (error) {
-      notify("Something went wrong. Please try again");
-    }
-  }
-
   const notify = (errorMessage) =>
     toast.warn(errorMessage, {
       position: toast.POSITION.TOP_RIGHT,
@@ -196,10 +179,26 @@ const Home_logged_in = () => {
   }
 
   useEffect(() => {
+    async function populateDashboard() {
+      try {
+        onOpenModalDeletePost();
+        const res = await axios.get(`${baseURL}/dashboard`, {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        });
+        respondeDelPostModal();
+        setAllPosts(res.data.posts);
+        setAllUsers(res.data.users);
+        setLoggedInUser(res.data.loggedInUser);
+      } catch (error) {
+        notify("Something went wrong. Please try again");
+      }
+    }
     const token = localStorage.getItem("token");
     if (token) {
       try {
-        const tokenp = jwt_decode(token);
+        jwt_decode(token);
         populateDashboard();
       } catch (error) {
         notify("Please log in to continue");

@@ -9,7 +9,6 @@ import { RotatingLines } from "react-loader-spinner";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
-import ProfilePhoto from "../../Images/iphone6.png";
 import baseURL from "../../url";
 
 const Profile = () => {
@@ -297,40 +296,39 @@ const Profile = () => {
     }
   }
 
-  async function populateProfile() {
-    try {
-      onOpenModalDeletePost();
-      const res = await axios.get(`${baseURL}/user/${id}`, {
-        headers: {
-          token: localStorage.getItem("token"),
-        },
-      });
-      respondeDelPostModal();
-      if (res.data.status === "error") {
-        notify("Something went wrong. Please try again");
-        navigate("/dashboard");
-        return;
-      }
-      if (res.data.status === "success") {
-        if (!res.data.user) {
+  useEffect(() => {
+    async function populateProfile(currentUser) {
+      setCurrentUser(currentUser);
+      try {
+        onOpenModalDeletePost();
+        const res = await axios.get(`${baseURL}/user/${id}`, {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        });
+        respondeDelPostModal();
+        if (res.data.status === "error") {
           notify("Something went wrong. Please try again");
           navigate("/dashboard");
           return;
         }
-        setUser(res.data.user);
+        if (res.data.status === "success") {
+          if (!res.data.user) {
+            notify("Something went wrong. Please try again");
+            navigate("/dashboard");
+            return;
+          }
+          setUser(res.data.user);
+        }
+      } catch (error) {
+        notify("Something went wrong. Please try again");
       }
-    } catch (error) {
-      notify("Something went wrong. Please try again");
     }
-  }
-
-  useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       try {
         const currentUser = jwt_decode(token);
-        setCurrentUser(currentUser);
-        populateProfile();
+        populateProfile(currentUser);
       } catch (error) {
         notify("Please log in to continue");
         localStorage.removeItem("token");
@@ -340,7 +338,7 @@ const Profile = () => {
       notify("Please login to continue");
       navigate("/login");
     }
-  }, [navigate]);
+  }, [navigate,id]);
 
   return (
     <section className="pt-16 pb-[2em]">

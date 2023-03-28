@@ -5,19 +5,16 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 import Logo from "../../Images/logo.png";
-import dummyProfile from "../../Images/image-one.jpg";
 import { TfiMenu } from "react-icons/tfi";
 import {
   AiOutlineClose,
   AiOutlineSearch,
   AiFillHome,
-  AiFillMessage,
   AiFillContacts,
   AiFillInfoCircle,
 } from "react-icons/ai";
 import { FaUserAlt } from "react-icons/fa";
 import { FiLogIn, FiLogOut } from "react-icons/fi";
-import { IoIosNotifications } from "react-icons/io";
 import baseURL from "../../url";
 
 const Navbar = () => {
