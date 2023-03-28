@@ -38,7 +38,7 @@ const Login = () => {
 
       if(response.data.status === 'success'){
         localStorage.setItem('token', response.data.token);
-        window.location.href="/dashboard";
+        window.location.href="https://64225ca18806c800094ba7b4--soft-marzipan-5467f2.netlify.app/dashboard";
       }
 
     } catch (error) {
